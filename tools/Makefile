@@ -81,7 +81,7 @@ endif
 warp-ctc.done: espnet.done
 	if . venv/bin/activate && python -c 'import torch as t;major=t.__version__.split(".")[0];assert major == "1"' &> /dev/null; then \
 		if [ ! -z "$(strip $(CUPY_VERSION))" ]; then \
-			. venv/bin/activate && pip install warpctc-pytorch10-cuda91; \
+			. venv/bin/activate && pip install warpctc-pytorch10-cuda9; \
 		else \
 			. venv/bin/activate && pip install warpctc-pytorch10-cpu; \
 		fi \
@@ -97,6 +97,7 @@ warp-ctc.done: espnet.done
 warp-transducer.done: espnet.done
 	rm -rf warp-transducer
 	git clone https://github.com/HawkAaron/warp-transducer.git
+	export CFLAGS="-I$CUDA_HOME/include $CFLAGS"
 	# Note: Requires gcc>=5.0 to build extensions with pytorch>=1.0
 	if . venv/bin/activate && python -c 'import torch as t;assert t.__version__[0] == "1"' &> /dev/null; then \
         . venv/bin/activate && python -c "from distutils.version import LooseVersion as V;assert V('$(GCC_VERSION)') >= V('5.0'), 'Requires gcc>=5.0'"; \
