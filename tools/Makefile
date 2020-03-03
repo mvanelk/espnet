@@ -29,9 +29,10 @@ endif
 
 .PHONY: all clean
 
-all: kaldi.done python check_install
+all: kaldi.done check_install
+# all: kaldi.done python check_install
 
-python: venv $(CUDA_DEPS) warp-ctc.done warp-transducer.done chainer_ctc.done
+# python: venv $(CUDA_DEPS) warp-ctc.done warp-transducer.done chainer_ctc.done
 
 extra: nkf.done moses.done mwerSegmenter.done pesq
 
@@ -94,24 +95,24 @@ endif
 # 	fi
 # 	touch warp-ctc.done
 
-warp-transducer.done: espnet.done
-	rm -rf warp-transducer
-	git clone https://github.com/HawkAaron/warp-transducer.git
-	# Note: Requires gcc>=5.0 to build extensions with pytorch>=1.0
-	if . venv/bin/activate && python -c 'import torch as t;assert t.__version__[0] == "1"' &> /dev/null; then \
-        . venv/bin/activate && python -c "from distutils.version import LooseVersion as V;assert V('$(GCC_VERSION)') >= V('5.0'), 'Requires gcc>=5.0'"; \
-	fi
-	. venv/bin/activate; cd warp-transducer && mkdir build && cd build && cmake .. && $(MAKE); true
-	. venv/bin/activate; cd warp-transducer/pytorch_binding && python setup.py install
-	touch warp-transducer.done
+# warp-transducer.done: espnet.done
+# 	rm -rf warp-transducer
+# 	git clone https://github.com/HawkAaron/warp-transducer.git
+# 	# Note: Requires gcc>=5.0 to build extensions with pytorch>=1.0
+# 	if . venv/bin/activate && python -c 'import torch as t;assert t.__version__[0] == "1"' &> /dev/null; then \
+#         . venv/bin/activate && python -c "from distutils.version import LooseVersion as V;assert V('$(GCC_VERSION)') >= V('5.0'), 'Requires gcc>=5.0'"; \
+# 	fi
+# 	. venv/bin/activate; cd warp-transducer && mkdir build && cd build && cmake .. && $(MAKE); true
+# 	. venv/bin/activate; cd warp-transducer/pytorch_binding && python setup.py install
+# 	touch warp-transducer.done
 
-chainer_ctc.done: espnet.done
-	rm -rf chainer_ctc
-	git clone https://github.com/jheymann85/chainer_ctc.git
-	. venv/bin/activate; pip install cython
-	. venv/bin/activate; cd chainer_ctc && chmod +x install_warp-ctc.sh && ./install_warp-ctc.sh ; true
-	. venv/bin/activate; cd chainer_ctc && pip install .
-	touch chainer_ctc.done
+# chainer_ctc.done: espnet.done
+# 	rm -rf chainer_ctc
+# 	git clone https://github.com/jheymann85/chainer_ctc.git
+# 	. venv/bin/activate; pip install cython
+# 	. venv/bin/activate; cd chainer_ctc && chmod +x install_warp-ctc.sh && ./install_warp-ctc.sh ; true
+# 	. venv/bin/activate; cd chainer_ctc && pip install .
+# 	touch chainer_ctc.done
 
 nkf.done:
 	rm -rf nkf
@@ -149,7 +150,7 @@ mwerSegmenter.done:
 	rm mwerSegmenter.tar.gz
 	touch mwerSegmenter.done
 
-check_install: kaldi.done python
+check_install: kaldi.done # python
 ifneq ($(strip $(CUPY_VERSION)),)
 	. venv/bin/activate; python check_install.py
 else
@@ -176,11 +177,11 @@ clean: clean_extra
 	rm -rf *.done
 	find . -iname "*.pyc" -delete
 
-clean_python:
-	rm -rf venv warp-ctc warp-transducer chainer_ctc
-	rm -f miniconda.sh
-	rm -f chainer_ctc.done espnet.done pytorch_complex pytorch_complex.done
-	find . -iname "*.pyc" -delete
+# clean_python:
+# 	rm -rf venv warp-ctc warp-transducer chainer_ctc
+# 	rm -f miniconda.sh
+# 	rm -f chainer_ctc.done espnet.done pytorch_complex pytorch_complex.done
+# 	find . -iname "*.pyc" -delete
 
 clean_extra:
 	rm -rf nkf.done swig.done moses.done mwerSegmenter.done
