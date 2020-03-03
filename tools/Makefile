@@ -81,7 +81,7 @@ endif
 warp-ctc.done: espnet.done
 	if . venv/bin/activate && python -c 'import torch as t;major=t.__version__.split(".")[0];assert major == "1"' &> /dev/null; then \
 		if [ ! -z "$(strip $(CUPY_VERSION))" ]; then \
-			. venv/bin/activate && pip install warpctc-pytorch10-cuda9; \
+			. venv/bin/activate && pip install warpctc-pytorch10-cuda10; \
 		else \
 			. venv/bin/activate && pip install warpctc-pytorch10-cpu; \
 		fi \
