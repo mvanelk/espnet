@@ -74,7 +74,7 @@ endif
 
 cupy.done: espnet.done
 ifneq ($(strip $(CUPY_VERSION)),)
-	. venv/bin/activate && pip install cupy==$(CUPY_VERSION)
+	. venv/bin/activate && CUDA_PATH=/usr/local/cuda pip install --pre cupy-cuda100==$(CUPY_VERSION)
 	touch cupy.done
 endif
 
