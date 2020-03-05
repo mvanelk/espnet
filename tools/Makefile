@@ -72,29 +72,38 @@ espnet.done: venv
 	touch espnet.done
 endif
 
-cupy.done: espnet.done
-ifneq ($(strip $(CUPY_VERSION)),)
-	. venv/bin/activate && pip install cupy==$(CUPY_VERSION)
-	touch cupy.done
-endif
+# cupy.done: espnet.done
+# ifneq ($(strip $(CUPY_VERSION)),)
+# 	. venv/bin/activate && pip install cupy==$(CUPY_VERSION)
+# 	touch cupy.done
+# endif
 
-warp-ctc.done: espnet.done
-	if . venv/bin/activate && python -c 'import torch as t;major=t.__version__.split(".")[0];assert major == "1"' &> /dev/null; then \
-		if [ ! -z "$(strip $(CUPY_VERSION))" ]; then \
-			. venv/bin/activate && pip install warpctc-pytorch10-cuda100; \
-		else \
-			. venv/bin/activate && pip install warpctc-pytorch10-cpu; \
-		fi \
-	else \
-		rm -rf warp-ctc; \
-		git clone https://github.com/espnet/warp-ctc.git; \
-		cd warp-ctc; git checkout -b pytorch-0.4 remotes/origin/pytorch-0.4; \
-		mkdir build && cd build && cmake .. && $(MAKE) && cd ..; \
-		. ../venv/bin/activate; pip install cffi; cd pytorch_binding && python setup.py install; \
-	fi
-	touch warp-ctc.done
+# warp-ctc.done: espnet.done
+# 	if . venv/bin/activate && python -c 'import torch as t;major=t.__version__.split(".")[0];assert major == "1"' &> /dev/null; then \
+# 		if [ ! -z "$(strip $(CUPY_VERSION))" ]; then \
+# 			. venv/bin/activate && pip install warpctc-pytorch10-cuda100; \
+# 		else \
+# 			. venv/bin/activate && pip install warpctc-pytorch10-cpu; \
+# 		fi \
+# 	else \
+# 		rm -rf warp-ctc; \
+# 		git clone https://github.com/espnet/warp-ctc.git; \
+# 		cd warp-ctc; git checkout -b pytorch-0.4 remotes/origin/pytorch-0.4; \
+# 		mkdir build && cd build && cmake .. && $(MAKE) && cd ..; \
+# 		. ../venv/bin/activate; pip install cffi; cd pytorch_binding && python setup.py install; \
+# 	fi
+# 	touch warp-ctc.done
 
 warp-transducer.done: espnet.done
+	echo "******************************************************************************************"
+	@echo CUDA_HOME, CUDA_TOOLKIT_ROOT_DIR, LD_LIBRARY_PATH, LIBRARY_PATH, LD_LIBRARY_PATH, CFLAGS
+	export CUDA_HOME=$HOME/tools/cuda-9.1
+	export CUDA_TOOLKIT_ROOT_DIR=$CUDA_HOME
+	export LD_LIBRARY_PATH="$CUDA_HOME/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
+	export LIBRARY_PATH=$CUDA_HOME/lib64:$LIBRARY_PATH
+	export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+	export CFLAGS="-I$CUDA_HOME/include $CFLAGS"
+	@echo CUDA_HOME, CUDA_TOOLKIT_ROOT_DIR, LD_LIBRARY_PATH, LIBRARY_PATH, LD_LIBRARY_PATH, CFLAGS
 	rm -rf warp-transducer
 	git clone https://github.com/HawkAaron/warp-transducer.git
 	export CFLAGS="-I$CUDA_HOME/include $CFLAGS"
