@@ -72,27 +72,27 @@ espnet.done: venv
 	touch espnet.done
 endif
 
-# cupy.done: espnet.done
-# ifneq ($(strip $(CUPY_VERSION)),)
-# 	. venv/bin/activate && pip install cupy==$(CUPY_VERSION)
-# 	touch cupy.done
-# endif
+cupy.done: espnet.done
+ifneq ($(strip $(CUPY_VERSION)),)
+	. venv/bin/activate && pip install cupy==$(CUPY_VERSION)
+	touch cupy.done
+endif
 
-# warp-ctc.done: espnet.done
-# 	if . venv/bin/activate && python -c 'import torch as t;major=t.__version__.split(".")[0];assert major == "1"' &> /dev/null; then \
-# 		if [ ! -z "$(strip $(CUPY_VERSION))" ]; then \
-# 			. venv/bin/activate && pip install warpctc-pytorch10-cuda100; \
-# 		else \
-# 			. venv/bin/activate && pip install warpctc-pytorch10-cpu; \
-# 		fi \
-# 	else \
-# 		rm -rf warp-ctc; \
-# 		git clone https://github.com/espnet/warp-ctc.git; \
-# 		cd warp-ctc; git checkout -b pytorch-0.4 remotes/origin/pytorch-0.4; \
-# 		mkdir build && cd build && cmake .. && $(MAKE) && cd ..; \
-# 		. ../venv/bin/activate; pip install cffi; cd pytorch_binding && python setup.py install; \
-# 	fi
-# 	touch warp-ctc.done
+warp-ctc.done: espnet.done
+	if . venv/bin/activate && python -c 'import torch as t;major=t.__version__.split(".")[0];assert major == "1"' &> /dev/null; then \
+		if [ ! -z "$(strip $(CUPY_VERSION))" ]; then \
+			. venv/bin/activate && pip install warpctc-pytorch10-cuda100; \
+		else \
+			. venv/bin/activate && pip install warpctc-pytorch10-cpu; \
+		fi \
+	else \
+		rm -rf warp-ctc; \
+		git clone https://github.com/espnet/warp-ctc.git; \
+		cd warp-ctc; git checkout -b pytorch-0.4 remotes/origin/pytorch-0.4; \
+		mkdir build && cd build && cmake .. && $(MAKE) && cd ..; \
+		. ../venv/bin/activate; pip install cffi; cd pytorch_binding && python setup.py install; \
+	fi
+	touch warp-ctc.done
 
 warp-transducer.done: espnet.done
 	echo "******************************************************************************************"
