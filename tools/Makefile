@@ -112,7 +112,7 @@ mwerSegmenter.done:
 	rm mwerSegmenter.tar.gz
 	touch mwerSegmenter.done
 
-check_install: kaldi.done python
+check_install: kaldi.done
 ifneq ($(strip $(CUPY_VERSION)),)
 	. venv/bin/activate; python check_install.py
 else
