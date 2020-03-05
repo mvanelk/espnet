@@ -29,7 +29,9 @@ endif
 
 .PHONY: all clean
 
-all: kaldi.done check_install
+all: kaldi.done python check_install
+
+python: venv $(CUDA_DEPS)
 
 extra: nkf.done moses.done mwerSegmenter.done pesq
 
@@ -112,7 +114,7 @@ mwerSegmenter.done:
 	rm mwerSegmenter.tar.gz
 	touch mwerSegmenter.done
 
-check_install: kaldi.done
+check_install: kaldi.done python
 ifneq ($(strip $(CUPY_VERSION)),)
 	. venv/bin/activate; python check_install.py
 else
@@ -134,11 +136,13 @@ PESQ.zip:
 
 
 clean: clean_extra
+	rm -rf kaldi venv
 	rm -f miniconda.sh
 	rm -rf *.done
 	find . -iname "*.pyc" -delete
 
 clean_python:
+	rm -rf venv
 	rm -f miniconda.sh
 	rm -f espnet.done pytorch_complex pytorch_complex.done
 	find . -iname "*.pyc" -delete
