@@ -29,7 +29,7 @@ endif
 
 .PHONY: all clean
 
-all: kaldi.done python check_install
+all: kaldi.done check_install
 
 extra: nkf.done moses.done mwerSegmenter.done pesq
 
