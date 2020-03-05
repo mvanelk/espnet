@@ -116,7 +116,8 @@ mwerSegmenter.done:
 
 check_install: kaldi.done python
 ifneq ($(strip $(CUPY_VERSION)),)
-	. venv/bin/activate; python check_install.py
+	. venv/bin/activate; python check_install.py --no-cupy
+	# . venv/bin/activate; python check_install.py
 else
 	. venv/bin/activate; python check_install.py --no-cupy
 endif
