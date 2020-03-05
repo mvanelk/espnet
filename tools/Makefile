@@ -95,15 +95,15 @@ warp-ctc.done: espnet.done
 	touch warp-ctc.done
 
 warp-transducer.done: espnet.done
-	echo "******************************************************************************************"
-	@echo CUDA_HOME, CUDA_TOOLKIT_ROOT_DIR, LD_LIBRARY_PATH, LIBRARY_PATH, LD_LIBRARY_PATH, CFLAGS
-	export CUDA_HOME=$HOME/tools/cuda-9.1
-	export CUDA_TOOLKIT_ROOT_DIR=$CUDA_HOME
-	export LD_LIBRARY_PATH="$CUDA_HOME/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
-	export LIBRARY_PATH=$CUDA_HOME/lib64:$LIBRARY_PATH
-	export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
-	export CFLAGS="-I$CUDA_HOME/include $CFLAGS"
-	@echo CUDA_HOME, CUDA_TOOLKIT_ROOT_DIR, LD_LIBRARY_PATH, LIBRARY_PATH, LD_LIBRARY_PATH, CFLAGS
+	# echo "******************************************************************************************"
+	# @echo CUDA_HOME, CUDA_TOOLKIT_ROOT_DIR, LD_LIBRARY_PATH, LIBRARY_PATH, LD_LIBRARY_PATH, CFLAGS
+	# export CUDA_HOME=$HOME/tools/cuda-9.1
+	# export CUDA_TOOLKIT_ROOT_DIR=$CUDA_HOME
+	# export LD_LIBRARY_PATH="$CUDA_HOME/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
+	# export LIBRARY_PATH=$CUDA_HOME/lib64:$LIBRARY_PATH
+	# export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+	# export CFLAGS="-I$CUDA_HOME/include $CFLAGS"
+	# @echo CUDA_HOME, CUDA_TOOLKIT_ROOT_DIR, LD_LIBRARY_PATH, LIBRARY_PATH, LD_LIBRARY_PATH, CFLAGS
 	rm -rf warp-transducer
 	git clone https://github.com/HawkAaron/warp-transducer.git
 	export CFLAGS="-I$CUDA_HOME/include $CFLAGS"
