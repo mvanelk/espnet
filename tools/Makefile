@@ -96,17 +96,17 @@ warp-ctc.done: espnet.done
 
 warp-transducer.done: espnet.done
 	echo "******************************************************************************************"
-	@echo $(CUDA_HOME), $(CUDA_TOOLKIT_ROOT_DIR), $(LD_LIBRARY_PATH), $(LIBRARY_PATH), $(LD_LIBRARY_PATH), $(CFLAGS)
-	export CUDA_HOME=$(HOME)/tools/cuda-9.1
-	export CUDA_TOOLKIT_ROOT_DIR=$(CUDA_HOME)
-	export LD_LIBRARY_PATH="$(CUDA_HOME)/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
-	export LIBRARY_PATH=$(CUDA_HOME)/lib64:$LIBRARY_PATH
-	export LD_LIBRARY_PATH=$(CUDA_HOME)/lib64:$LD_LIBRARY_PATH
-	export CFLAGS="-I$(CUDA_HOME)/include $CFLAGS"
-	@echo $(CUDA_HOME), $(CUDA_TOOLKIT_ROOT_DIR), $(LD_LIBRARY_PATH), $(LIBRARY_PATH), $(LD_LIBRARY_PATH), $(CFLAGS)
+	# @echo $(CUDA_HOME), $(CUDA_TOOLKIT_ROOT_DIR), $(LD_LIBRARY_PATH), $(LIBRARY_PATH), $(LD_LIBRARY_PATH), $(CFLAGS)
+	# export CUDA_HOME=$(echo $(HOME)/tools/cuda-9.1)
+	# export CUDA_TOOLKIT_ROOT_DIR=$(CUDA_HOME)
+	# export LD_LIBRARY_PATH="$(CUDA_HOME)/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
+	# export LIBRARY_PATH=$(CUDA_HOME)/lib64:$LIBRARY_PATH
+	# export LD_LIBRARY_PATH=$(CUDA_HOME)/lib64:$LD_LIBRARY_PATH
+	# export CFLAGS="-I$(CUDA_HOME)/include $CFLAGS"
+	# @echo $(CUDA_HOME), $(CUDA_TOOLKIT_ROOT_DIR), $(LD_LIBRARY_PATH), $(LIBRARY_PATH), $(LD_LIBRARY_PATH), $(CFLAGS)
 	rm -rf warp-transducer
 	git clone https://github.com/HawkAaron/warp-transducer.git
-	export CFLAGS="-I$CUDA_HOME/include $CFLAGS"
+	export CFLAGS="-I$(CUDA_HOME)/include $CFLAGS"
 	# Note: Requires gcc>=5.0 to build extensions with pytorch>=1.0
 	if . venv/bin/activate && python -c 'import torch as t;assert t.__version__[0] == "1"' &> /dev/null; then \
         . venv/bin/activate && python -c "from distutils.version import LooseVersion as V;assert V('$(GCC_VERSION)') >= V('5.0'), 'Requires gcc>=5.0'"; \
