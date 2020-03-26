@@ -27,6 +27,7 @@ and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature e
 - Support numbers of `ST` recipes (Fisher-CallHome Spanish, Libri-trans, IWSLT'18, How2, Must-C, Mboshi-French, etc.)
 - Support numbers of `MT` recipes (IWSLT'16, the above ST recipes etc.)
 - Support speech separation and recognition recipe (WSJ-2mix)
+- Support voice conversion recipe (VCC2020 baseline) (new!)
 
 
 ### ASR: Automatic Speech Recognition
@@ -53,6 +54,10 @@ and also follows [Kaldi](http://kaldi-asr.org/) style data processing, feature e
 - Transformer based end-to-end ST (new!)
 - Transformer based end-to-end MT (new!)
 
+### VC: Voice conversion
+- End-to-end VC based on cascaded ASR+TTS (new!)
+- Baseline system for Voice Conversion Challenge 2020!
+
 ### DNN Framework
 - Flexible network architecture thanks to chainer and pytorch
 - Flexible front-end processing thanks to [kaldiio](https://github.com/nttcslab-sp/kaldiio) and HDF5 support
@@ -69,8 +74,8 @@ See https://espnet.github.io/espnet/tutorial.html
 go to [docker/](docker/) and follow [instructions](https://espnet.github.io/espnet/docker.html).
 
 ## Contribution
-Any contributions to ESPNet are welcome and feel free to ask any questions or requests to [issues](https://github.com/espnet/espnet/issues).
-If you are the first commiter, please follow the [contribution guide](CONTRIBUTING.md).
+Thank you for taking times for ESPnet! Any contributions to ESPNet are welcome and feel free to ask any questions or requests to [issues](https://github.com/espnet/espnet/issues).
+If it's the first contribution to ESPnet for you,  please follow the [contribution guide](CONTRIBUTING.md).
 
 ## Results and demo
 
@@ -98,8 +103,8 @@ We list the character error rate (CER) and word error rate (WER) of major ASR ta
 | TEDLIUM2 test          | N/A     | 8.1     | same as above                                                                                                                                                         |
 | TEDLIUM3 dev           | N/A     | 9.7     | [link](https://github.com/espnet/espnet/blob/master/egs/tedlium3/asr1/RESULTS.md#transformer-elayers12-dlayers6-units2048-8-gpus-specaug--large-lm)                   |
 | TEDLIUM3 test          | N/A     | 8.0     | same as above                                                                                                                                                         |
-| WSJ dev93              |   3.2   |   7.4   | [link](https://github.com/espnet/espnet/blob/master/egs/wsj/asr1/RESULTS.md#transformer-pytorch-13--builtin-ctc)                                                      |
-| WSJ eval92             |   0.7   |   1.8   | same as above                                                                                                                                                         |
+| WSJ dev93              | 3.2     | 7.0     | N/A                                                                                                                                                                   |
+| WSJ eval92             | 2.1     | 4.7     | N/A                                                                                                                                                                   |
 
 Note that the performance of the CSJ, HKUST, and Librispeech tasks was significantly improved by using the wide network (#units = 1024) and large subword units if necessary reported by [RWTH](https://arxiv.org/pdf/1805.03294.pdf).
 
@@ -310,6 +315,10 @@ Available pretrained vocoder models in the demo script are listed as follows:
 | [csmsc.wavenet.mol.v1](https://drive.google.com/open?id=1PsjFRV5eUP0HHwBaRYya9smKy5ghXKzj)           | ZH    | 24k     | 80-7600        | 2048 / 300 / 1200      | [MoL WaveNet](https://github.com/r9y9/wavenet_vocoder)                  |
 | [csmsc.parallel_wavegan.v1](https://drive.google.com/open?id=10M6H88jEUGbRWBmU1Ff2VaTmOAeL8CEy)      | ZH    | 24k     | 80-7600        | 2048 / 300 / 1200      | [Parallel WaveGAN](https://github.com/kan-bayashi/ParallelWaveGAN)      |
 
+### VC results
+
+The [Voice Conversion Challenge 2020](http://www.vc-challenge.org/) (VCC2020) adopts ESPnet to build an end-to-end based baseline system. In VCC2020, the objective is intra/cross lingual nonparallel VC. A cascade method of ASR+TTS is developed.  
+You can download converted samples [here](https://drive.google.com/drive/folders/1oeZo83GrOgtqxGwF7KagzIrfjr8X59Ue?usp=sharing).
 
 ## References
 
