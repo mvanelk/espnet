@@ -18,10 +18,11 @@ verbose=1    # verbose option (if set > 0, get more log)
 N=0          # number of minibatches to be used (mainly for debugging). "0" uses all minibatches.
 seed=1       # random seed number
 resume=""    # the snapshot path to resume (if set empty, no effect)
-num_iter_processes=1 # number of data loaders to strtart
+epochs=1000
 batch_size=0 # maximum seqs in batch (0 to disable)
 batch_count="auto" # one of ["auto", "seq", "bin", "frame"]
 num_save_attention=5
+num_iter_processes=1 # number of data loaders to strtart
 keep_all_data_on_mem=False
 
 # feature extraction related
@@ -198,6 +199,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
            --resume ${resume} \
            --train-json ${tr_json} \
            --valid-json ${dt_json} \
+           --epochs ${epochs} \
            --num-iter-processes ${num_iter_processes} \
            --batch-size ${batch_size} \
            --batch-count ${batch_count} \
