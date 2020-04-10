@@ -23,7 +23,6 @@ batch_size=0 # maximum seqs in batch (0 to disable)
 batch_count="auto" # one of ["auto", "seq", "bin", "frame"]
 num_save_attention=5
 num_iter_processes=1 # number of data loaders to strtart
-keep_all_data_on_mem=False
 
 # feature extraction related
 fs=22050      # sampling frequency
@@ -204,7 +203,6 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
            --batch-size ${batch_size} \
            --batch-count ${batch_count} \
            --num-save-attention ${num_save_attention} \
-           --keep-all-data-on-mem ${keep_all_data_on_mem} \
            --config ${train_config}
 fi
 
