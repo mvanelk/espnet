@@ -219,7 +219,7 @@ if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
                                --num ${n_average}
     fi
     pids=() # initialize pids
-    for name in ${dev_set} ${eval_set}; do
+    for name in ${eval_set}; do
     (
         [ ! -e ${outdir}/${name} ] && mkdir -p ${outdir}/${name}
         cp ${dumpdir}/${name}/data.json ${outdir}/${name}
