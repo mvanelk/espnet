@@ -186,7 +186,7 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ]; then
         tr_json=${feat_tr_dir}/data.json
         dt_json=${feat_dt_dir}/data.json
     fi
-    ${cuda_cmd} --gpu ${ngpu} ${expdir}/train.log \
+    ${cuda_cmd} --gpu ${ngpu} -- \
         tts_train.py \
            --backend ${backend} \
            --ngpu ${ngpu} \
